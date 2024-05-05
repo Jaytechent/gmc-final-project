@@ -16,6 +16,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
+  const  BASE_URL =   import.meta.env.VITE_BASE_URL
 
   const handleUserInput = (e) => {
     const { name, value } = e.target;
@@ -44,15 +45,13 @@ const Login = () => {
       setLoading(true);
 
       const loginResponse = await axios.post(
-        "http://localhost:3000/api/v1/auth/login",
+        `${BASE_URL}/api/v1/auth/login`,
         formData
       );
       // console.log(loginResponse);
 
-      const userName = loginResponse.data.name;
-
       // Dispatch the email to the Redux store
-      dispatch(updateUser({ name: userName }));
+      dispatch(updateUser(loginResponse.data ));
       // Navigate to the homepage after successful login
       navigate("/");
     } catch (error) {
@@ -68,9 +67,15 @@ const Login = () => {
   };
 
   return (
-    <section className="grid place-items-center">
-      {contextHolder}
-      <form className="max-w-xl w-full space-y-4">
+   
+
+    <>
+    
+   
+    <div className="flex flex-col md:flex-row gap-8 p-8">
+  <section className="grid place-items-center w-full md:w-1/2 bg-white rounded-md shadow-md">
+    {contextHolder}
+    <form className="max-w-xl w-full space-y-4">
         <Input onChange={handleUserInput} name="email" placeholder="Email" />
         <Input
           onChange={handleUserInput}
@@ -78,15 +83,26 @@ const Login = () => {
           placeholder="Password"
         />
         <p>
-          Don't have an account? <Link to="/login">Register</Link>{" "}
+          Don't have an account? <Link to="/register">Register</Link>{" "}
         </p>
         <Button block type="primary" onClick={handleSubmit} loading={loading}>
           LOG IN
         </Button>
-
-        <Link to="/forgot-password">Forgot Password?</Link>
+<p className="pt-2 text-center align-middle">   <Link to="/forgot-password">Forgot Password?</Link></p>
+      
       </form>
     </section>
+
+    <div className="flex-1 relative overflow-hidden bg-white rounded-md shadow-md">
+  <video className="w-full h-full object-cover" src="/gmcads-login-vdo.mp4" autoPlay loop muted playsInline></video>
+</div>
+
+
+
+
+
+    </div>
+    </>
   );
 };
 

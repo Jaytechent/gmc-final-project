@@ -1,0 +1,17 @@
+/* Default styles */
+body {
+    background-color: #ffffff; /* Light background color */
+    color: #000000; /* Light text color */
+  }
+  
+  /* Dark mode styles */
+  .dark-mode {
+    background-color: #1a1a1a; /* Dark background color */
+    color: #ffffff; /* Dark text color */
+  }
+  
+  /* Styles for the toggle container */
+  .toggle-container {
+    margin-top: 20px; /* Adjust the margin as needed */
+  }
+  

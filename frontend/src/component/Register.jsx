@@ -3,8 +3,8 @@ import { Button, Input } from "antd";
 import validator from "validator";
 import axios from "axios";
 import { message } from "antd";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -15,7 +15,7 @@ const Register = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const navigate = useNavigate();
-
+  const  BASE_URL =   import.meta.env.VITE_BASE_URL
   const handleUserInput = (e) => {
     const { name, value } = e.target;
     setFormData((prevValue) => ({
@@ -56,10 +56,10 @@ const Register = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:3000/api/v1/auth/register",
+        `${BASE_URL}/api/v1/auth/register`,
         formData
       );
-      console.log(response);
+      // console.log(response);
 
       navigate("/login");
       // window.alert("YOU HAVE SUCCESSFULLY REGISTERED");
@@ -74,15 +74,19 @@ const Register = () => {
   };
 
   return (
-    <section className="grid place-items-center">
+  <>
+ <div className="flex flex-col md:flex-row gap-4 p-8">
+  <section className="grid place-items-center w-full md:w-1/2 bg-white rounded-md shadow-md">
+
+    <h2>Register</h2>
       {contextHolder}
       <form className="max-w-xl w-full space-y-4">
-        <Input onChange={handleUserInput} name="name" placeholder="Name" />
-        <Input onChange={handleUserInput} name="email" placeholder="Email" />
+        <Input onChange={handleUserInput} name="name" placeholder="Name" allowClear />
+        <Input onChange={handleUserInput} name="email" placeholder="Email" allowClear />
         <Input.Password
           onChange={handleUserInput}
           name="password"
-          placeholder="Password"
+          placeholder="Password" allowClear
         />
         {!isPasswordValid && (
           <p style={{ color: "red" }}>
@@ -98,6 +102,25 @@ const Register = () => {
         </Button>
       </form>
     </section>
+
+
+
+<div className="flex-1 relative overflow-hidden bg-white rounded-md shadow-md">
+  <video className="w-full h-full object-cover" src="/gmcads-reg-vdo.mp4" autoPlay loop muted playsInline></video>
+</div>
+
+
+
+
+
+
+  </div>
+  
+  
+  
+  </>
+
+
   );
 };
 

@@ -7,6 +7,7 @@ import { message } from "antd";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const  BASE_URL =   import.meta.env.VITE_BASE_URL
 
   const handleEmailInput = (e) => {
     setEmail(e.target.value);
@@ -18,22 +19,14 @@ const ForgotPassword = () => {
 
       // Check if the email exists on the server
       const emailCheckResponse = await axios.post(
-        "http://localhost:3000/api/v1/auth/check-email",
+        `${BASE_URL}/api/v1/auth/generate-reset-token`,
         { email }
       );
 
-      if (emailCheckResponse.data.exists) {
-        // If the email exists, send a password reset link
-        const resetPasswordResponse = await axios.post(
-          "http://localhost:3000/api/v1/auth/reset-password",
-          { email }
-        );
 
-        message.success(resetPasswordResponse.data.message);
-      } else {
-        // If the email doesn't exist, show an error
-        message.error("Email not found. Please register.");
-      }
+        message.success(emailCheckResponse.data.message);
+   
+      
     } catch (error) {
       console.error("Error during password reset:", error);
       message.error(
@@ -45,7 +38,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="grid place-items-center">
+    <div className="grid place-items-center p-16">
       <form className="max-w-xl w-full space-y-4">
         <Input
           onChange={handleEmailInput}

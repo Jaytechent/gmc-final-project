@@ -35,11 +35,11 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 app.use("/api/v1", authRoutes);
-app.use("/api/categories", categoriesRouter);
-app.use("/api/posts", postRouter);
+app.use("/api/v1/categories", categoriesRouter);
+app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/auth/home", homeRoute);
 
-app.use(routeNotFound);
+ app.use(routeNotFound);
 app.use(errorHandler);
 
 const startApp = async () => {
